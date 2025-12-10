@@ -10,10 +10,15 @@ public class GameManager : MonoBehaviour
     [Header("UI Objects")]
     [SerializeField] private GameObject gameOverCanvas;
     [SerializeField] private GameObject startScreenCanvas;
-    
+
     [Header("Score Elements")]
-    [SerializeField] private TextMeshProUGUI scoreText;      // Sağ üstteki (Oyun içi)
-    [SerializeField] private TextMeshProUGUI finalScoreText; // YENİ: Paneldeki (Oyun sonu)
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI finalScoreText;
+
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource musicSource; // Müziği çalan kaynak
+    [SerializeField] private AudioSource sfxSource;   // Efektleri çalan kaynak
+    [SerializeField] private AudioClip scoreClip;     // Puan alma sesi dosyası
 
     private int score = 0;
     public static bool autoStart = false;
@@ -23,6 +28,12 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+        }
+
+        // Oyun başladığında müzik çalmıyorsa başlat (Emin olmak için)
+        if (!musicSource.isPlaying)
+        {
+            musicSource.Play();
         }
 
         Time.timeScale = 0f;
@@ -35,7 +46,7 @@ public class GameManager : MonoBehaviour
         {
             startScreenCanvas.SetActive(true);
             gameOverCanvas.SetActive(false);
-            scoreText.gameObject.SetActive(false); // Giriş ekranında skoru gizle
+            scoreText.gameObject.SetActive(false);
         }
     }
 
@@ -47,9 +58,8 @@ public class GameManager : MonoBehaviour
 
         startScreenCanvas.SetActive(false);
         gameOverCanvas.SetActive(false);
-        
-        scoreText.gameObject.SetActive(true); // YENİ: Oyun başlayınca sağ üstü aç
-        
+        scoreText.gameObject.SetActive(true);
+
         Time.timeScale = 1f;
     }
 
@@ -57,17 +67,19 @@ public class GameManager : MonoBehaviour
     {
         score++;
         scoreText.text = score.ToString();
+
+        // YENİ: Skor sesini çal (PlayOneShot, üst üste çalabilmeyi sağlar)
+        sfxSource.PlayOneShot(scoreClip);
     }
 
     public void GameOver()
     {
-        // 1. Sağ üstteki skoru gizle
-        scoreText.gameObject.SetActive(false);
+        // YENİ: Müziği durdur
+        musicSource.Stop();
 
-        // 2. Paneldeki büyük skora puanı yaz
+        scoreText.gameObject.SetActive(false);
         finalScoreText.text = score.ToString();
 
-        // 3. Paneli aç ve oyunu durdur
         gameOverCanvas.SetActive(true);
         Time.timeScale = 0f;
     }

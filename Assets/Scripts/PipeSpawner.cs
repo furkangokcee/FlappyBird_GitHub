@@ -6,7 +6,7 @@ public class PipeSpawner : MonoBehaviour
     [SerializeField] private GameObject pipePrefab;
 
     // Kaç saniyede bir boru çıksın?
-    [SerializeField] private float spawnRate = 2f;
+    [SerializeField] private float spawnRate = 1.8f;
 
     // Boruların yükseklik ayarı (Ne kadar yukarıda veya aşağıda doğabilir)
     [SerializeField] private float minHeight = -1f;

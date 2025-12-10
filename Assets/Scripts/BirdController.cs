@@ -18,7 +18,7 @@ public class BirdController : MonoBehaviour
     void Update()
     {
         // Eğer Mouse'un sol tuşuna basılırsa (Telefonda dokunmaya denk gelir)
-        if (Input.GetMouseButtonDown(0)) 
+        if (Input.GetMouseButtonDown(0))
         {
             // Mevcut hızı sıfırla (yoksa düşerken basarsan yukarı çıkması zorlaşır)
             // Sonra yukarı doğru kuvvet uygula (Vector2.up = (0, 1))

@@ -3,7 +3,7 @@ using UnityEngine;
 public class MoveLeft : MonoBehaviour
 {
     // Hızın zeminle aynı olması görsel bütünlük için iyidir (Örn: 2f)
-    [SerializeField] private float speed = 2f;
+    [SerializeField] private float speed = 3f;
 
     void Update()
     {
