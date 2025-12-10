@@ -25,4 +25,10 @@ public class BirdController : MonoBehaviour
             rb.velocity = Vector2.up * jumpForce;
         }
     }
+    // Unity'nin özel çarpışma fonksiyonu
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Çarptığı şey ne olursa olsun (Zemin veya Boru) oyunu bitir.
+        GameManager.instance.GameOver();
+    }
 }
